@@ -1,0 +1,14 @@
+.product-shell {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  /* align-items: baseline; */
+}
+
+.left-section {
+  margin-left: auto;
+}
+
+.right-section {
+  margin-right: auto;
+}

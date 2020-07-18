@@ -1,0 +1,23 @@
+.filter-option-container {
+  width: 100%;
+  min-height: 200px;
+}
+
+.filter-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  min-height: 200px;
+  max-height: 200px;
+  /* max-width: 600px; */
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  /* border: 1px solid #007bff; */
+  border-radius: 0.25rem;
+  overflow: auto;
+  /* margin: 10px; */
+  /* padding: 10px; */
+}

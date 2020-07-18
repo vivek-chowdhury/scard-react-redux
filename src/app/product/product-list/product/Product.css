@@ -1,0 +1,85 @@
+img {
+  width: 150px;
+  height: 100px;
+}
+
+.item-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* border: 1px solid #007bff; */
+  width: 200px;
+  height: 380px;
+  box-shadow: 1px 4px 9px #888888;
+  margin: 20px;
+}
+
+.img-container {
+  text-align: center;
+  min-height: 100px;
+}
+
+.discount {
+  /* height: 30px; */
+  background-color: red;
+  text-align: center;
+}
+.discount-value {
+  color: white;
+  font-weight: bold;
+}
+
+.description-container {
+  padding-top: 15px;
+}
+.title {
+  margin: 2px;
+  text-align: center;
+  padding-bottom: 10px;
+  text-transform: uppercase;
+  /* max-height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis; */
+}
+.description-heading {
+  font-weight: bold;
+}
+
+.mrp-price {
+  font-weight: normal;
+  padding-left: 10px;
+}
+
+.final-price {
+  padding-left: 10px;
+}
+
+.price {
+  font-size: 14px;
+}
+
+.item-description {
+  display: flex;
+  padding-left: 5px;
+  flex-direction: row;
+}
+
+.item-info {
+  margin-left: auto;
+  padding-right: 5px;
+}
+
+.brand {
+  width: 120px;
+  text-align: end;
+  text-transform: uppercase;
+}
+.checked {
+  color: orange;
+}
+
+.color-box {
+  width: 15px;
+  height: 15px;
+  background-color: red;
+}
