@@ -8,7 +8,12 @@ function Header(props) {
   return (
     <nav className="toolbar">
       <div className="left-options">
-        <img src={company} alt="Logo" className="logo-image" />
+        <span className="inline-flex-options">
+          <img src={company} alt="Logo" className="logo-image" />
+          {props.user.fullName !== "" && (
+            <label className="align-text">{props.user.fullName}</label>
+          )}
+        </span>
       </div>
       {props.isLoggedIn && (
         <div className="search-container">
@@ -20,7 +25,7 @@ function Header(props) {
           ></input>
         </div>
       )}
-      {!props.isLoggedIn && (
+      {props.isLoggedIn && (
         <div className="right-options">
           <span className="inline-flex-options">
             <span
@@ -46,12 +51,21 @@ function Header(props) {
   );
 }
 
+/**
+ * @description This method retrieve slice of state from store
+ * @param {*} state
+ */
 function mapStateToProps(state) {
   return {
     app: state.app,
     market: state.market,
+    user: state.user,
   };
 }
 
+/**
+ * @description This object contains all the actions which Component require to notify reducer for
+ * any change.
+ */
 const mapDispatchToProps = {};
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

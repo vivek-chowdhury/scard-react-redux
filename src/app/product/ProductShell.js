@@ -28,6 +28,8 @@ function ProductShell(props) {
   const [brandFilter, setBrandFilter] = useState([]);
 
   const [totalCartItems, setTotalCartItems] = useState(0);
+
+  //Contains true if item is added
   const [isItemAddingToCart, setItemAddingToCart] = useState(false);
 
   /**
@@ -109,13 +111,13 @@ function ProductShell(props) {
    * user to login screen.
    */
   useEffect(() => {
-    // if (props.user.isLoggedIn && !isLoadingProducts) {
-    if (!isLoadingProducts) {
+    if (props.user.isLoggedIn && !isLoadingProducts) {
+      // if (!isLoadingProducts) {
       setIsLoadingProducts(true);
       populateInformation();
     }
     if (!props.user.isLoggedIn) {
-      // props.history.push("/");
+      props.history.push("/");
     }
 
     executeFilters();

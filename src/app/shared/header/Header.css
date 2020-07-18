@@ -67,7 +67,9 @@
 .inline-flex-options {
   display: inline-flex;
 }
-
+.align-text {
+  align-self: center;
+}
 .header-options {
   cursor: pointer;
 }
