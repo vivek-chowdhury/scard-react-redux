@@ -1,5 +1,6 @@
 import React from "react";
 import CheckBoxFilter from "./checkbox-filter/CheckBoxFilter";
+import SliderFilter from "./slider-filter/SliderFilter";
 
 import "./ProductFilter.css";
 
@@ -20,6 +21,7 @@ function ProductFilter(props) {
         onChange={props.onChange}
         title="Colour"
       />
+      <SliderFilter />
     </div>
   );
 }

@@ -1,0 +1,24 @@
+.slider-control-container {
+  width: 100%;
+  text-align: center;
+}
+
+.slider-label {
+  width: 90%;
+  text-align: center;
+}
+
+.slider-control-field {
+  width: 100%;
+  /* text-align: center; */
+  flex-flow: column;
+  width: 90%;
+  display: flex;
+}
+.min-position {
+  margin-right: auto;
+  position: absolute;
+}
+.max-position {
+  margin-left: auto;
+}

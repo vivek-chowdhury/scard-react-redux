@@ -21,7 +21,6 @@ function App(props) {
    * @param {*} event
    */
   const handleSignOut = (event) => {
-    console.log(props);
     // event.preventDefault();
     if (props.user.isLoggedIn) {
       props.signOutUser();

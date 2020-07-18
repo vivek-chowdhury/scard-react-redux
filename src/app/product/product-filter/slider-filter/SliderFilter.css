@@ -1,0 +1,20 @@
+.slider-option-container {
+  width: 100%;
+  min-height: 200px;
+}
+
+.slider-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  min-height: 100px;
+  max-height: 100px;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  overflow: auto;
+  padding-left: 15px;
+}
