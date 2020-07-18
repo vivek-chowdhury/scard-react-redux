@@ -1,6 +1,6 @@
 import React from "react";
-import FormInput from "./../../shared/form-input/FormInput";
-import CheckBox from "./../../shared/check-box/CheckBox";
+import FormInput from "../../shared/form-input/FormInput";
+import CheckBox from "../../shared/check-box/CheckBox";
 import "./LoginForm.css";
 
 function LoginForm(props) {
