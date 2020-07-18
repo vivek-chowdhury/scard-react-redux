@@ -1,5 +1,5 @@
 import * as LoginActions from "./userActionTypes";
-import * as LoginServices from "../../../api/LoginServices";
+import * as LoginServices from "../../../api/loginServices";
 
 /**
  * @description This function is responsible for dispatching 'USER_VALIDATED_SUCCESSFULLY'

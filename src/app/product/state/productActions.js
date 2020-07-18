@@ -1,5 +1,5 @@
 import * as ProductActions from "./productActionTypes";
-import * as ProductService from "./../../../api/ProductService";
+import * as ProductService from "./../../../api/productService";
 
 /**
  * @description This function is responsible for requesting server to send
