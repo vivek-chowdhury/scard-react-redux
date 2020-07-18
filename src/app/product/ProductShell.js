@@ -109,12 +109,13 @@ function ProductShell(props) {
    * user to login screen.
    */
   useEffect(() => {
-    if (props.user.isLoggedIn && !isLoadingProducts) {
+    // if (props.user.isLoggedIn && !isLoadingProducts) {
+    if (!isLoadingProducts) {
       setIsLoadingProducts(true);
       populateInformation();
     }
     if (!props.user.isLoggedIn) {
-      props.history.push("/");
+      // props.history.push("/");
     }
 
     executeFilters();

@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import "./Header.css";
 // import { NavLink } from "react-router-dom";
 import company from "./../../../logo.svg";
@@ -19,13 +20,18 @@ function Header(props) {
           ></input>
         </div>
       )}
-      {props.isLoggedIn && (
+      {!props.isLoggedIn && (
         <div className="right-options">
           <span className="inline-flex-options">
             <span
               className="header-options option-spacing fa fa-shopping-cart fa-2x"
               onClick={props.onShowShoppingCart}
-            />
+            >
+              {props.market.cart.length > 0 && (
+                <span className="badge">{props.market.cart.length}</span>
+              )}
+            </span>
+
             <span
               className="header-options option-spacing fa fa-sign-out fa-2x"
               onClick={props.onSignOut}
@@ -40,4 +46,12 @@ function Header(props) {
   );
 }
 
-export default Header;
+function mapStateToProps(state) {
+  return {
+    app: state.app,
+    market: state.market,
+  };
+}
+
+const mapDispatchToProps = {};
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
