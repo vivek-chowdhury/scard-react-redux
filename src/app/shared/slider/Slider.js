@@ -10,16 +10,25 @@ function Slider(props) {
         {props.label}
       </label>
       <div className="slider-control-field">
-        <span className="min-position">Min</span>
-        <span className="max-position">Max</span>
+        <div className="top-label-container">
+          <span>Min</span>
+          <span className="right-label">Max</span>
+        </div>
+
         <input
           type="range"
           id={props.id}
           name={props.name}
           min={props.min}
           max={props.max}
+          value={props.value}
           step={step}
+          onChange={props.onChange}
         ></input>
+        <div className="bottom-label-container">
+          <span>{props.minLabel}</span>
+          <span className="right-label">{props.maxLabel}</span>
+        </div>
       </div>
     </div>
   );
@@ -30,6 +39,8 @@ Slider.propType = {
   name: PropTypes.string.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
+  minLabel: PropTypes.string.isRequired,
+  maxLabel: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   step: PropTypes.number,
 };

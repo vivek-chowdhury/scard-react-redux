@@ -15,3 +15,11 @@ export function updateBrandFilter(option) {
 export function updateColourFilter(option) {
   return { type: FilterActions.UPDATE_COLOUR_FILTER_OPTION, colour: option };
 }
+
+/**
+ * This method is responsible for requesting reducer to update price filter list
+ * @param {*} value
+ */
+export function updatePriceFilter(value) {
+  return { type: FilterActions.UPDATE_PRICE_FILTER_OPTION, value };
+}

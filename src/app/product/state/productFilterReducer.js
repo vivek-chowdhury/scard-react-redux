@@ -4,6 +4,12 @@ import * as FilterActions from "./productFilterActionTypes";
 const initialState = {
   brandFilters: [],
   colourFilters: [],
+  priceFilter: {
+    min: 0,
+    max: 100,
+    step: 1,
+    selected: 100,
+  },
 };
 
 /**
@@ -12,6 +18,31 @@ const initialState = {
  */
 function getFilterObject(value, type) {
   return { value: value, type, checked: false, key: value.replace(/\s/g, "") };
+}
+
+/**
+ * @description
+ * @param {*} products
+ */
+function getPriceRange(products) {
+  const price = {
+    min: 1000000,
+    max: 100,
+    step: 1,
+    selected: 100,
+  };
+  products.map((product) => {
+    if (product.price.final_price < price.min) {
+      price.min = product.price.final_price;
+    }
+    if (price.max < product.price.final_price) {
+      price.max = product.price.final_price;
+    }
+    return product;
+  });
+  price.step = Math.floor(Math.sqrt(price.max));
+  price.selected = price.max;
+  return price;
 }
 
 /**
@@ -81,6 +112,7 @@ export default function productFilterReducers(state = initialState, action) {
         ...state,
         brandFilters: getBranchFilter(action.products),
         colourFilters: getColourFilter(action.products),
+        priceFilter: getPriceRange(action.products),
       };
     case FilterActions.UPDATE_BRAND_FILTER_OPTION:
       return {
@@ -91,6 +123,11 @@ export default function productFilterReducers(state = initialState, action) {
       return {
         ...state,
         colourFilters: updateFilterOption(state.colourFilters, action.colour),
+      };
+    case FilterActions.UPDATE_PRICE_FILTER_OPTION:
+      return {
+        ...state,
+        priceFilter: { ...state.priceFilter, selected: action.value },
       };
     case ActionTypes.PRODUCT_LOAD_FAILED:
       return initialState;

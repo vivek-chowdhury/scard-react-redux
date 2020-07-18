@@ -9,8 +9,11 @@ import { loadProducts, updateAddToCart } from "./state/productActions";
 import {
   updateBrandFilter,
   updateColourFilter,
+  updatePriceFilter,
 } from "./state/productFilterActions";
 import "./ProductShell.css";
+
+import useDebounce from "./../shared/custom-hooks/useDebounce";
 
 function ProductShell(props) {
   //Contains true if Component started fetching required data from server
@@ -31,6 +34,9 @@ function ProductShell(props) {
 
   //Contains true if item is added
   const [isItemAddingToCart, setItemAddingToCart] = useState(false);
+
+  //Contains selected price filter
+  const [price, setPrice] = useState(props.filters.priceFilter.selected);
 
   /**
    * @description This method is responsible for loading product list and once list is
@@ -89,13 +95,12 @@ function ProductShell(props) {
         return hasColourSelected(colorFilter, product);
       });
     }
-    const finalList =
-      props.header.searchBy !== "" ||
-      brandFilter.length > 0 ||
-      colorFilter.length > 0
-        ? fresList
-        : props.market.products;
-    setFilteredProducts(finalList);
+
+    const priceList = fresList.length > 0 ? fresList : props.market.products;
+    fresList = priceList.filter((product) => {
+      return product.price.final_price <= props.filters.priceFilter.selected;
+    });
+    setFilteredProducts(fresList);
   }, [brandFilter, colorFilter, props]);
 
   /**
@@ -185,12 +190,33 @@ function ProductShell(props) {
     props.updateAddToCart(option);
   };
 
+  /**
+   * @description This method will invoke when user change price filter using slider.
+   * @param {*} event
+   */
+  const handleSliderChange = (event) => {
+    setPrice(event.target.value);
+  };
+
+  /**
+   * @description This method will wait for 100 mili seconds before sending
+   * notification to reducer.
+   */
+  useDebounce(
+    (value) => {
+      props.updatePriceFilter(value);
+    },
+    price,
+    50
+  );
+
   return (
     <div className="product-shell">
       <ProductFilter
         filters={props.filters}
         onFilterSelected={handleFilterSelected}
         onChange={handleCheckboxOnChange}
+        onSliderChanged={handleSliderChange}
         className="left-section"
       />
       <ProductList
@@ -226,5 +252,6 @@ const mapDispatchToProps = {
   updateBrandFilter,
   updateColourFilter,
   updateAddToCart,
+  updatePriceFilter,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductShell);

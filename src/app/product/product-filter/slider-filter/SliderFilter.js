@@ -3,28 +3,21 @@ import Slider from "./../../../shared/slider/Slider";
 import "./SliderFilter.css";
 
 function SliderFilter(props) {
-  const min = 0;
-  const max = 100;
-  const step = 1;
   return (
     <div className="slider-option-container">
-      <h3>Price</h3>
-      {/* <Slider
-        id={props.id}
-        name={props.name}
-        min={props.min}
-        max={props.max}
-        step={props.step}
-        label={props.label}
-      /> */}
+      <h3>{props.title}</h3>
       <div className="slider-card">
         <Slider
-          id="price"
-          name="price"
-          min={min}
-          max={max}
-          step={step}
-          label="Select Price range"
+          id={props.id}
+          name={props.id}
+          min={props.min}
+          max={props.max}
+          step={props.step}
+          maxLabel={props.maxLabel}
+          minLabel={props.minLabel}
+          label={props.label}
+          value={props.value}
+          onChange={props.onChange}
         />
       </div>
     </div>

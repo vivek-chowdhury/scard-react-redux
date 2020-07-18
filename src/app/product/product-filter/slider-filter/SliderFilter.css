@@ -7,8 +7,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  min-width: 100px;
-  min-height: 100px;
+  min-width: 110px;
+  min-height: 110px;
   max-height: 100px;
   word-wrap: break-word;
   background-color: #fff;

@@ -21,7 +21,19 @@ function ProductFilter(props) {
         onChange={props.onChange}
         title="Colour"
       />
-      <SliderFilter />
+      <SliderFilter
+        key="price-selector"
+        id="price"
+        title="Price"
+        min={props.filters.priceFilter.min}
+        max={props.filters.priceFilter.max}
+        step={props.filters.priceFilter.step}
+        value={props.filters.priceFilter.selected}
+        maxLabel={props.filters.priceFilter.max}
+        minLabel={props.filters.priceFilter.min}
+        onChange={props.onSliderChanged}
+        label="Select Price range"
+      />
     </div>
   );
 }
