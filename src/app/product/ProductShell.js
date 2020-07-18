@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
+
 import ProductFilter from "./product-filter/ProductFilter";
 import ProductList from "./product-list/ProductList";
 import { toggleSpinner } from "./../appAction";
-import { loadProducts } from "./state/productActions";
+import { loadProducts, updateAddToCart } from "./state/productActions";
 import {
   updateBrandFilter,
   updateColourFilter,
@@ -15,10 +17,18 @@ function ProductShell(props) {
   const [isLoadingProducts, setIsLoadingProducts] = useState(false);
 
   //Contaisn product filter list
-  const [filteredProducts, setFilteredProducts] = useState(props.products);
+  const [filteredProducts, setFilteredProducts] = useState(
+    props.market.products
+  );
 
+  //Contains list of colour filter applied to product list
   const [colorFilter, setColorFilter] = useState([]);
+
+  //Contains list of brand filter applied to product list
   const [brandFilter, setBrandFilter] = useState([]);
+
+  const [totalCartItems, setTotalCartItems] = useState(0);
+  const [isItemAddingToCart, setItemAddingToCart] = useState(false);
 
   /**
    * @description This method is responsible for loading product list and once list is
@@ -57,12 +67,12 @@ function ProductShell(props) {
   const executeFilters = useCallback(() => {
     let fresList = [];
     if (brandFilter.length > 0) {
-      fresList = props.products.filter((product) => {
+      fresList = props.market.products.filter((product) => {
         return hasBrandSelected(brandFilter, product);
       });
     }
     if (colorFilter.length > 0) {
-      const sourceList = fresList.length > 0 ? fresList : props.products;
+      const sourceList = fresList.length > 0 ? fresList : props.market.products;
       fresList = sourceList.filter((product) => {
         return hasColourSelected(colorFilter, product);
       });
@@ -70,9 +80,28 @@ function ProductShell(props) {
     const finalList =
       brandFilter.length > 0 || colorFilter.length > 0
         ? fresList
-        : props.products;
+        : props.market.products;
     setFilteredProducts(finalList);
-  }, [brandFilter, colorFilter, props.products]);
+  }, [brandFilter, colorFilter, props]);
+
+  /**
+   * @description This function is responsible for displaying toast notification when item
+   * is added to cart or quanity is updated to already existing cart.
+   */
+  const notifyWhenAdded = useCallback(() => {
+    if (
+      props.market.cart &&
+      props.market.cart.length > totalCartItems &&
+      isItemAddingToCart
+    ) {
+      setItemAddingToCart(false);
+      toast.success("Item added to cart successfully !");
+    } else if (isItemAddingToCart) {
+      setItemAddingToCart(false);
+      toast.success("Quantity is added to alrady existing item successfully !");
+    }
+    setTotalCartItems(props.market.cart.length);
+  }, [isItemAddingToCart, props.market.cart, totalCartItems]);
 
   /**
    * @description This method is responsible for checking whether user is logged in or
@@ -80,17 +109,20 @@ function ProductShell(props) {
    * user to login screen.
    */
   useEffect(() => {
-    if (props.user.isLoggedIn && !isLoadingProducts) {
+    // if (props.user.isLoggedIn && !isLoadingProducts) {
+    if (!isLoadingProducts) {
       setIsLoadingProducts(true);
       populateInformation();
     }
     if (!props.user.isLoggedIn) {
-      props.history.push("/");
+      // props.history.push("/");
     }
 
     executeFilters();
+    notifyWhenAdded();
   }, [
     executeFilters,
+    notifyWhenAdded,
     isLoadingProducts,
     populateInformation,
     props,
@@ -130,6 +162,16 @@ function ProductShell(props) {
 
   const handleCheckboxOnChange = (event, option) => {};
 
+  /**
+   * @description This method is invoked when user adds any product to cart
+   * @param {*} event
+   * @param {*} option
+   */
+  const handleAddToCartRequest = (event, option) => {
+    setItemAddingToCart(true);
+    props.updateAddToCart(option);
+  };
+
   return (
     <div className="product-shell">
       <ProductFilter
@@ -138,7 +180,11 @@ function ProductShell(props) {
         onChange={handleCheckboxOnChange}
         className="left-section"
       />
-      <ProductList products={filteredProducts} className="right-section" />
+      <ProductList
+        products={filteredProducts}
+        onAddToCart={handleAddToCartRequest}
+        className="right-section"
+      />
     </div>
   );
 }
@@ -151,7 +197,7 @@ function mapStateToProps(state) {
   return {
     user: state.user,
     app: state.app,
-    products: state.products,
+    market: state.market,
     filters: state.filters,
   };
 }
@@ -165,5 +211,6 @@ const mapDispatchToProps = {
   loadProducts,
   updateBrandFilter,
   updateColourFilter,
+  updateAddToCart,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductShell);

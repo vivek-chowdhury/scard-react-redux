@@ -38,3 +38,11 @@ export function onProductionLoadFailed(error) {
     error,
   };
 }
+
+/**
+ * @description This function is invoked when user tries to add product to shopping cart.
+ * @param {*} error
+ */
+export function updateAddToCart(product) {
+  return { type: ProductActions.UPDATE_ADD_TO_CART, product };
+}

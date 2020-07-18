@@ -5,31 +5,35 @@ function Product(props) {
   return (
     <div className="item-container">
       <div className="discount">
-        {props.discount !== 0 && (
-          <span className="discount-value">Discount {props.discount}%</span>
+        {props.product.discount !== 0 && (
+          <span className="discount-value">
+            Discount {props.product.discount}%
+          </span>
         )}
       </div>
       <div className="img-container">
-        <img src={props.image} alt="Item" />
+        <img src={props.product.image} alt="Item" />
       </div>
       <div className="description-container">
-        <div className="title">{props.title}</div>
+        <div className="title">{props.product.title}</div>
         <div className="item-description">
           <span className="description-heading">Brand</span>
           <div className="item-info brand">
-            <span>{props.brand}</span>
+            <span>{props.product.brand}</span>
           </div>
         </div>
 
         <div className="item-description">
           <span className="description-heading">Price</span>
           <div className="item-info">
-            {props.price.mrp && (
+            {props.product.price.mrp && (
               <span className="mrp-price price">
-                <s>{props.price.mrp}</s>
+                <s>{props.product.price.mrp}</s>
               </span>
             )}
-            <span className="final-price price">{props.price.final_price}</span>
+            <span className="final-price price">
+              {props.product.price.final_price}
+            </span>
           </div>
         </div>
 
@@ -49,11 +53,19 @@ function Product(props) {
           <div className="item-info">
             <div
               className="color-box"
-              style={{ backgroundColor: props.colour.color }}
+              style={{ backgroundColor: props.product.colour.color }}
             ></div>
           </div>
         </div>
       </div>
+      <input
+        type="button"
+        value="Add to Cart"
+        className="add-to-cart btn btn-primary"
+        onClick={(event) => {
+          props.onAddToCart(event, props.product);
+        }}
+      />
     </div>
   );
 }

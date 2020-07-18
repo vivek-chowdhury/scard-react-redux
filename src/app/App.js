@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from "react";
 import { Switch, Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 import Spinner from "./shared/spinner/Spinner";
@@ -12,9 +14,6 @@ const UserLogin = lazy(() => import("./user/UserLogin"));
 const ProductShell = lazy(() => import("./product/ProductShell"));
 
 function App(props) {
-  // const stayHidden = true;
-  // const isLoggedIn = true;
-
   /**
    * @description This method is responsible for handling sign out request, it will
    * responsible for notifying store about sign out and navigating user to logn screen.
@@ -41,22 +40,25 @@ function App(props) {
   };
 
   return (
-    <div className="App">
-      <Header
-        isLoggedIn={props.user.isLoggedIn}
-        onSignOut={handleSignOut}
-        onShowShoppingCart={handleShowShoppingCart}
-      />
-      <div className="route-container">
-        <Suspense fallback={<Spinner />}>
-          <Switch>
-            <Route path="/" exact component={UserLogin} />
-            <Route path="/products" component={ProductShell} />
-          </Switch>
-        </Suspense>
+    <React.Fragment>
+      <ToastContainer autoClose={3000} hideProgressBar />
+      <div className="App">
+        <Header
+          isLoggedIn={props.user.isLoggedIn}
+          onSignOut={handleSignOut}
+          onShowShoppingCart={handleShowShoppingCart}
+        />
+        <div className="route-container">
+          <Suspense fallback={<Spinner />}>
+            <Switch>
+              <Route path="/" exact component={UserLogin} />
+              <Route path="/products" component={ProductShell} />
+            </Switch>
+          </Suspense>
+        </div>
+        <Spinner stayHidden={props.app.stayHidden} />
       </div>
-      <Spinner stayHidden={props.app.stayHidden} />
-    </div>
+    </React.Fragment>
   );
 }
 

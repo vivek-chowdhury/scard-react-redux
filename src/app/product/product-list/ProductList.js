@@ -3,19 +3,24 @@ import Product from "./product/Product";
 
 import "./ProductList.css";
 
-function ProductList({ products }) {
+function ProductList(props) {
   /**
    * @description This method is responsible for rendering product list.
    * @param {*} product
    */
   const renderProduct = (product) => {
-    return <Product key={product.id} {...product} />;
+    return (
+      <Product
+        key={product.id}
+        product={product}
+        onAddToCart={props.onAddToCart}
+      />
+    );
   };
   return (
     <div>
-      {/* {console.log(products)} */}
       <div className="product-list-container">
-        {products.map(renderProduct)}
+        {props.products.map(renderProduct)}
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ export function appReducer(state = initalState, action) {
 const rootReducer = combineReducers({
   user: userReducer,
   app: appReducer,
-  products: productReducers,
+  market: productReducers,
   filters: productFilterReducers,
 });
 export default rootReducer;
