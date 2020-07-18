@@ -22,7 +22,7 @@ function App(props) {
    */
   const handleSignOut = (event) => {
     console.log(props);
-    event.preventDefault();
+    // event.preventDefault();
     if (props.user.isLoggedIn) {
       props.signOutUser();
     }
@@ -36,7 +36,7 @@ function App(props) {
    * @param {*} event
    */
   const handleShowShoppingCart = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
   };
 
   return (

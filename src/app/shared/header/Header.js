@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
+
+import useDebounce from "./../custom-hooks/useDebounce";
+import { searchProductBy } from "./headerAction";
 import "./Header.css";
 // import { NavLink } from "react-router-dom";
 import company from "./../../../logo.svg";
 
 function Header(props) {
+  //Contain search key entered by user
+  const [searchKey, setSearchKey] = useState("");
+  /**
+   * @description This method is invoked when user try to search product from search bar.
+   * @param {*} event
+   */
+  useDebounce(
+    (value) => {
+      props.searchProductBy(value);
+    },
+    searchKey,
+    500
+  );
+
   return (
     <nav className="toolbar">
       <div className="left-options">
@@ -22,6 +39,9 @@ function Header(props) {
             name="search"
             placeholder="Search.."
             className="input-search"
+            onChange={(event) => {
+              setSearchKey(event.target.value);
+            }}
           ></input>
         </div>
       )}
@@ -67,5 +87,7 @@ function mapStateToProps(state) {
  * @description This object contains all the actions which Component require to notify reducer for
  * any change.
  */
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  searchProductBy,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

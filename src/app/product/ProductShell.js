@@ -63,13 +63,23 @@ function ProductShell(props) {
       return item.value === target.brand.toUpperCase();
     });
   };
+
   /**
    * @description This method is responsible for executing user selected filters on product list.
    */
   const executeFilters = useCallback(() => {
     let fresList = [];
-    if (brandFilter.length > 0) {
+    if (props.header.searchBy) {
+      const searchKey = props.header.searchBy.toUpperCase();
       fresList = props.market.products.filter((product) => {
+        return product.title.toUpperCase().indexOf(searchKey) > -1;
+      });
+    }
+
+    if (brandFilter.length > 0) {
+      const branchSource =
+        fresList.length > 0 ? fresList : props.market.products;
+      fresList = branchSource.filter((product) => {
         return hasBrandSelected(brandFilter, product);
       });
     }
@@ -80,7 +90,9 @@ function ProductShell(props) {
       });
     }
     const finalList =
-      brandFilter.length > 0 || colorFilter.length > 0
+      props.header.searchBy !== "" ||
+      brandFilter.length > 0 ||
+      colorFilter.length > 0
         ? fresList
         : props.market.products;
     setFilteredProducts(finalList);
@@ -112,7 +124,6 @@ function ProductShell(props) {
    */
   useEffect(() => {
     if (props.user.isLoggedIn && !isLoadingProducts) {
-      // if (!isLoadingProducts) {
       setIsLoadingProducts(true);
       populateInformation();
     }
@@ -201,6 +212,7 @@ function mapStateToProps(state) {
     app: state.app,
     market: state.market,
     filters: state.filters,
+    header: state.header,
   };
 }
 

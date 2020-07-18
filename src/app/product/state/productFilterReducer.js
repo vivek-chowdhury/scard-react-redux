@@ -69,7 +69,7 @@ function updateFilterOption(filter, option) {
 
 /**
  *@description This function is responsible for returning new state as per the 
- action. It takes previous state and action which need to perform on the state.
+ action. It takes previous state and the action as parameter and return new filter state.
   
  * @param {*} state
  * @param {*} action

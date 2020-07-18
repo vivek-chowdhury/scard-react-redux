@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import userReducer from "./user/state/userReducer";
 import productReducers from "./product/state/productReducers";
 import productFilterReducers from "./product/state/productFilterReducer";
+import headerReducer from "./shared/header/headerReducer";
 import * as ActionTypes from "./appActionTypes";
 
 const initalState = {
@@ -9,7 +10,7 @@ const initalState = {
 };
 /**
  *@description This function is responsible for returning new state as per the 
- action. It takes previous state and action which need to perform on the state.
+ action. It takes previous state and the action as parameter and return new root state.
   
  * @param {*} state
  * @param {*} action
@@ -31,5 +32,6 @@ const rootReducer = combineReducers({
   app: appReducer,
   market: productReducers,
   filters: productFilterReducers,
+  header: headerReducer,
 });
 export default rootReducer;
