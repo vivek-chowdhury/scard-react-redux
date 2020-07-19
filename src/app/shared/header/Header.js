@@ -28,7 +28,9 @@ function Header(props) {
         <span className="inline-flex-options">
           <img src={company} alt="Logo" className="logo-image" />
           {props.user.fullName !== "" && (
-            <label className="align-text">{props.user.fullName}</label>
+            <label id="user-full-name" className="align-text">
+              {props.user.fullName}
+            </label>
           )}
         </span>
       </div>

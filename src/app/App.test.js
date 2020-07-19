@@ -37,7 +37,8 @@ it("It should load application", () => {
 
 it("It should load login screen", () => {
   const { container } = renderApplication();
-  container.querySelector(".login-container");
+  const screen = container.querySelector(".login-container");
+  expect(screen).toBeDefined();
 });
 
 it("It should contains empty user id", () => {

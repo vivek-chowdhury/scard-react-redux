@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it should render empty login form 1`] = `
+<div
+  className="login-container"
+>
+  <div
+    className="card"
+  >
+    <form
+      className="form-horizontal"
+      onSubmit={[Function]}
+    >
+      
+      <div
+        className="form-group"
+      >
+        <label
+          className="control-label"
+          htmlFor="username"
+        >
+          User id :
+        </label>
+        <div
+          className=""
+        >
+          <input
+            className="form-control input-field"
+            id="username"
+            name="username"
+            onChange={[Function]}
+            placeholder="Enter user id"
+            required={true}
+            type="text"
+            value=""
+          />
+        </div>
+        
+      </div>
+      <div
+        className="form-group"
+      >
+        <label
+          className="control-label"
+          htmlFor="password"
+        >
+          Password :
+        </label>
+        <div
+          className=""
+        >
+          <input
+            className="form-control input-field"
+            id="password"
+            name="password"
+            onChange={[Function]}
+            placeholder="Enter password"
+            required={true}
+            type="password"
+            value=""
+          />
+        </div>
+        
+      </div>
+      <div
+        className="action-container"
+      >
+        <input
+          className="btn btn-primary"
+          disabled={true}
+          type="submit"
+          value="Login"
+        />
+        <label
+          htmlFor="rememberMe"
+        >
+          <input
+            checked={false}
+            id="rememberMe"
+            name="rememberMe"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="checkbox"
+          />
+          Remember me
+        </label>
+      </div>
+    </form>
+  </div>
+</div>
+`;
