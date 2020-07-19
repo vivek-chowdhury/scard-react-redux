@@ -5,11 +5,16 @@ import { toast } from "react-toastify";
 import ProductFilter from "./product-filter/ProductFilter";
 import ProductList from "./product-list/ProductList";
 import { toggleSpinner } from "./../appAction";
-import { loadProducts, updateAddToCart } from "./state/productActions";
+import {
+  loadProducts,
+  updateAddToCart,
+  searchProducts,
+} from "./state/productActions";
 import {
   updateBrandFilter,
   updateColourFilter,
   updatePriceFilter,
+  loadFilters,
 } from "./state/productFilterActions";
 import "./ProductShell.css";
 
@@ -38,15 +43,41 @@ function ProductShell(props) {
   //Contains selected price filter
   const [price, setPrice] = useState(props.filters.priceFilter.selected);
 
+  const [searchByText, setSearchByText] = useState(props.header.searchBy);
+
   /**
-   * @description This method is responsible for loading product list and once list is
-   * downloaded it will remove spinner from screen.
+   * @description This function is responsible for fetching product list
    */
-  const populateInformation = useCallback(() => {
+  const fetchProductLis = useCallback(() => {
     props.loadProducts().then((response) => {
       props.toggleSpinner(false);
     });
   }, [props]);
+
+  /**
+   * @description This method is responsible for loading product list and filter list, once list is
+   * downloaded it will remove spinner from screen.
+   */
+  const populateInformation = useCallback(() => {
+    if (props.user.isLoggedIn && !isLoadingProducts) {
+      setIsLoadingProducts(true);
+      props.loadFilters();
+      fetchProductLis();
+    }
+    if (
+      searchByText !== props.header.searchBy &&
+      props.header.searchBy !== ""
+    ) {
+      setSearchByText(props.header.searchBy);
+      props.searchProducts(props.header.searchBy);
+    } else if (
+      searchByText !== props.header.searchBy &&
+      props.header.searchBy === ""
+    ) {
+      setSearchByText(props.header.searchBy);
+      fetchProductLis();
+    }
+  }, [fetchProductLis, isLoadingProducts, props, searchByText]);
 
   /**
    * @description This method is responsible for filtering products based on color filters
@@ -75,13 +106,6 @@ function ProductShell(props) {
    */
   const executeFilters = useCallback(() => {
     let fresList = [];
-    if (props.header.searchBy) {
-      const searchKey = props.header.searchBy.toUpperCase();
-      fresList = props.market.products.filter((product) => {
-        return product.title.toUpperCase().indexOf(searchKey) > -1;
-      });
-    }
-
     if (brandFilter.length > 0) {
       const branchSource =
         fresList.length > 0 ? fresList : props.market.products;
@@ -128,24 +152,14 @@ function ProductShell(props) {
    * user to login screen.
    */
   useEffect(() => {
-    if (props.user.isLoggedIn && !isLoadingProducts) {
-      setIsLoadingProducts(true);
-      populateInformation();
-    }
     if (!props.user.isLoggedIn) {
       props.history.push("/");
     }
 
+    populateInformation();
     executeFilters();
     notifyWhenAdded();
-  }, [
-    executeFilters,
-    notifyWhenAdded,
-    isLoadingProducts,
-    populateInformation,
-    props,
-    props.user,
-  ]);
+  }, [executeFilters, notifyWhenAdded, populateInformation, props, props.user]);
 
   /**
    * @description This method is invoked when user selects filters from filter section.
@@ -253,5 +267,7 @@ const mapDispatchToProps = {
   updateColourFilter,
   updateAddToCart,
   updatePriceFilter,
+  loadFilters,
+  searchProducts,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductShell);

@@ -1,4 +1,21 @@
 import * as FilterActions from "./productFilterActionTypes";
+import * as ProductService from "./../../../api/productService";
+
+/**
+ * This method is responsible for requesting reducer to update filter informaton
+ * @param {*} filters
+ */
+export function filtersLoadedScuccessfully(filters) {
+  return { type: FilterActions.FILTER_LOADED_SUCCESSFULLY, filters };
+}
+
+/**
+ * This method is responsible for requesting reducer to update error informaton
+ * @param {*} filters
+ */
+export function filterLoadFailed(error) {
+  return { type: FilterActions.FILTERS_FAILED_TO_LOAD, error };
+}
 
 /**
  * This method is responsible for requesting reducer to update brand filter list
@@ -22,4 +39,21 @@ export function updateColourFilter(option) {
  */
 export function updatePriceFilter(value) {
   return { type: FilterActions.UPDATE_PRICE_FILTER_OPTION, value };
+}
+
+/**
+ * @description This function is responsible for loading filters from server.
+ *
+ */
+export function loadFilters() {
+  return function (dispatch) {
+    return ProductService.loadFilters()
+      .then((response) => {
+        dispatch(filtersLoadedScuccessfully(response));
+      })
+      .catch((error) => {
+        debugger;
+        dispatch(filterLoadFailed(error));
+      });
+  };
 }

@@ -10,6 +10,12 @@ const initialState = {
     step: 1,
     selected: 100,
   },
+  discountFilter: {
+    min: 0,
+    max: 100,
+    step: 1,
+    selected: 0,
+  },
 };
 
 /**
@@ -21,7 +27,7 @@ function getFilterObject(value, type) {
 }
 
 /**
- * @description
+ * @description This function is responsible for setting price filter initial values.
  * @param {*} products
  */
 function getPriceRange(products) {
@@ -84,6 +90,32 @@ function getColourFilter(products) {
 }
 
 /**
+ * @description This function is responsible for retrieving colour filter from avaiable filter list.
+ * @param {*} filters
+ */
+function getColorFilters(filters) {
+  const colourFilterObject = relevantFilterObject(filters, "COLOUR");
+  const filter = colourFilterObject.values;
+  const finalList = [];
+  filter.map((rule) => {
+    finalList.push(getFilterObject(rule.title.toUpperCase(), "colour"));
+    return rule;
+  });
+  return finalList;
+}
+
+/**
+ * @description This function is responsible for slicing required filter from list
+ * @param {*} filters
+ * @param {*} type
+ */
+function relevantFilterObject(filters, type) {
+  return filters.find((filter) => {
+    return filter.type === type;
+  });
+}
+
+/**
  * This function is responsible for updating filter options state.
  * @param {*} filter
  * @param {*} option
@@ -111,8 +143,14 @@ export default function productFilterReducers(state = initialState, action) {
       return {
         ...state,
         brandFilters: getBranchFilter(action.products),
-        colourFilters: getColourFilter(action.products),
+        // colourFilters: getColourFilter(action.products),
         priceFilter: getPriceRange(action.products),
+      };
+    case FilterActions.FILTER_LOADED_SUCCESSFULLY:
+      return {
+        ...state,
+        colourFilters: getColorFilters(action.filters),
+        // priceFilter: getPriceRange(action.products),
       };
     case FilterActions.UPDATE_BRAND_FILTER_OPTION:
       return {

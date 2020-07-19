@@ -7,7 +7,6 @@ const baseUrl = process.env.REACT_APP_API_URL + "/users";
  * @param {*} password
  */
 export function validateUser(userid, password) {
-  // const url = baseUrl + `?username=${userid}&password=${password}`;
-  const url = baseUrl + `?username=${userid}`;
+  const url = baseUrl + `?username=${userid}&password=${password}`;
   return fetch(url).then(handleResponse).catch(handleError);
 }

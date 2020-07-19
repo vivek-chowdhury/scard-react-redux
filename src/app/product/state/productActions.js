@@ -18,6 +18,22 @@ export function loadProducts() {
 }
 
 /**
+ * @description This function is responsible for requesting server to send
+ * available matching products.
+ */
+export function searchProducts(searchkey) {
+  return function (dispatch) {
+    return ProductService.searchProduct(searchkey)
+      .then((response) => {
+        dispatch(onProductLoadedSuccessfully(response));
+      })
+      .catch((error) => {
+        throw error;
+      });
+  };
+}
+
+/**
  * @description This funciton is invoked when application receives list of available products.
  * @param {*} products
  */
