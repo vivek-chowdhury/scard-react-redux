@@ -5,7 +5,7 @@ const initalState = {
   username: "",
   password: "",
   fullName: "",
-  isLoggedIn: true,
+  isLoggedIn: false,
   rememberMe: false,
   error: "",
 };
