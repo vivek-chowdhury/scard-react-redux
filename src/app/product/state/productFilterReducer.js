@@ -71,25 +71,6 @@ function getBranchFilter(products) {
 }
 
 /**
- * @description This function is responsible for retrieving colour filter from avaiable product list.
- * @param {*} products
- * @return array
- */
-function getColourFilter(products) {
-  const filter = [];
-  const finalFilter = [];
-  products.map((product) => {
-    const color = product.colour.title.toUpperCase();
-    if (filter.indexOf(color) === -1) {
-      filter.push(color);
-      finalFilter.push(getFilterObject(color, "colour"));
-    }
-    return color;
-  });
-  return finalFilter;
-}
-
-/**
  * @description This function is responsible for retrieving colour filter from avaiable filter list.
  * @param {*} filters
  */
@@ -143,14 +124,12 @@ export default function productFilterReducers(state = initialState, action) {
       return {
         ...state,
         brandFilters: getBranchFilter(action.products),
-        // colourFilters: getColourFilter(action.products),
         priceFilter: getPriceRange(action.products),
       };
     case FilterActions.FILTER_LOADED_SUCCESSFULLY:
       return {
         ...state,
         colourFilters: getColorFilters(action.filters),
-        // priceFilter: getPriceRange(action.products),
       };
     case FilterActions.UPDATE_BRAND_FILTER_OPTION:
       return {
