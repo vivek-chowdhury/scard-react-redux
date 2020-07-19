@@ -31,7 +31,7 @@ function LoginForm(props) {
       <div className="action-container">
         <input
           type="submit"
-          value="Save"
+          value="Login"
           className="btn btn-primary"
           disabled={props.isFieldEmpty}
         />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 
 import LoginForm from "./login-form/LoginForm";
@@ -18,6 +18,15 @@ function UserLogin(props) {
   const [isFieldEmpty, setIsFieldEmpty] = useState(true);
 
   /**
+   * @description This function is responsible for toggling login button state.
+   */
+  const validateLoginForm = useCallback(() => {
+    const required =
+      user.username === "" || user.password === "" ? true : false;
+    setIsFieldEmpty(required);
+  }, [user.password, user.username]);
+
+  /**
    * @description This method is responsible for checking user detail and if store already has
    * information of previous logged in user then it will pre-populate credentials if
    * user is logged out else navigate user to products screen if user is validated.
@@ -29,7 +38,8 @@ function UserLogin(props) {
     if (props.user.error !== "") {
       updateErrorMessage();
     }
-  }, [props.history, props.user, props]);
+    validateLoginForm();
+  }, [props.history, props.user, props, validateLoginForm]);
 
   /**
    * @description This method is responsible for displaying error message
@@ -54,8 +64,7 @@ function UserLogin(props) {
     if (target.name === "rememberMe") {
       props.toggleRememberMe(target.checked);
     }
-    const required = user.username === "" && user.password === "";
-    setIsFieldEmpty(required);
+    // validateLoginForm();
   };
 
   /**
